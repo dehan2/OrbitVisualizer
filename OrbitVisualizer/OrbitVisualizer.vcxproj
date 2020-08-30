@@ -15,8 +15,7 @@
     <Keyword>QtVS_v303</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.18362.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.18362.0</WindowsTargetPlatformVersion>
-    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')"
-      >$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -28,11 +27,8 @@
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Target Name="QtMsBuildNotFound"
-    BeforeTargets="CustomBuild;ClCompile"
-    Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
-    <Message Importance="High"
-      Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
   </Target>
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared" />
@@ -50,14 +46,34 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(VSRCDIR)\V\Core_tier\include;$(VSRCDIR)\V\VUFS\include;..\..\VDRCQtLib\VDRCQtLib\include;..\..\cppOrbitTools\orbitTools\core;..\..\cppOrbitTools\orbitTools\orbit;$(Qt_INCLUDEPATH_);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtOpenGL;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(VSRCDIR)\V\Core_tier\include;$(VSRCDIR)\V\VUFS\include;..\..\VDRCQtLib\VDRCQtLib\include;..\..\cppOrbitTools\orbitTools\core;..\..\cppOrbitTools\orbitTools\orbit;$(Qt_INCLUDEPATH_);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtOpenGL;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>msvc2019_64</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;gui;opengl;widgets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>msvc2019_64</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;gui;opengl;widgets</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
@@ -69,10 +85,10 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -85,17 +101,43 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <QtRcc Include="OrbitVisualizer.qrc"/>
-    <QtUic Include="OrbitVisualizer.ui"/>
-    <QtMoc Include="OrbitVisualizer.h"/>
-    <ClCompile Include="OrbitVisualizer.cpp"/>
-    <ClCompile Include="main.cpp"/>
-
+    <ClCompile Include="OrbitView.cpp" />
+    <ClCompile Include="RSOManager.cpp" />
+    <QtRcc Include="OrbitVisualizer.qrc" />
+    <QtUic Include="OrbitView.ui" />
+    <QtUic Include="OrbitVisualizer.ui" />
+    <QtMoc Include="OrbitVisualizer.h" />
+    <ClCompile Include="OrbitalBall.cpp" />
+    <ClCompile Include="OrbitVisualizer.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="constForDVDCOOP.h" />
+    <ClInclude Include="OrbitalBall.h" />
+    <QtMoc Include="OrbitView.h" />
+    <ClInclude Include="RSOManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\cppOrbitTools\orbitTools\core\core.vcxproj">
+      <Project>{f3067b0d-4f1e-457a-ae9c-aab6ccd5c1a3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cppOrbitTools\orbitTools\orbit\orbit.vcxproj">
+      <Project>{e7d39150-d44f-426d-b0e2-5acfa19042de}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\dev_vdrc\VUFS\VUFS.vcxproj">
+      <Project>{3913760f-393e-42c3-93f0-1cf973768670}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\dev_vdrc\V_Core\V_Core.vcxproj">
+      <Project>{266fa1e0-7282-45e8-a976-b3415761fca7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VDRCQtLib\VDRCQtLib\VDRCQtLib.vcxproj">
+      <Project>{6b446e23-249c-4819-a228-8e55cc99ff7c}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
