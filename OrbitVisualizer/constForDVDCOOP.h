@@ -63,7 +63,7 @@ struct compare_segment_transition_events_in_ascending_order {
 const int OPTIMAL_MANEUVER_SEARCH_RANGE = 10;
 const int MANEUVER_ANGLE_INCREMENT = 1;
 
-const double standardTimeIncrement = 10;
+const double standardTimeIncrement = 1;
 
 struct PredictionCommand
 {

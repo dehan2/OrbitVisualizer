@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 
 OrbitVisualizer::OrbitVisualizer(QWidget *parent)
     : QMainWindow(parent)
@@ -363,6 +364,45 @@ void OrbitVisualizer::simulation_option_changed()
 void OrbitVisualizer::visualization_option_changed()
 {
 	pView->RSOSize = ui.spinBox_point_size->value();
+	pView->update();
+}
+
+
+
+void OrbitVisualizer::move_to_global_TCA()
+{
+	double globalMinDistance = DBL_MAX;
+	PredictedTCA* globalTCA = nullptr;
+
+	for (auto& TCAInfo : m_TCAInfos)
+	{
+		if (TCAInfo.minDistance < globalMinDistance)
+		{
+			globalMinDistance = TCAInfo.minDistance;
+			globalTCA = &TCAInfo;
+		}
+	}
+
+	tm epochOnUTC = make_time_on_UTC(0.0);
+	int hourDiff = globalTCA->hour - epochOnUTC.tm_hour;
+	int minDiff = globalTCA->min - epochOnUTC.tm_min;
+	int secDiff = globalTCA->sec - epochOnUTC.tm_sec;
+	int diffInSec = hourDiff * 3600 + minDiff * 60 + secDiff;
+
+	cout << "Predicted Global TCA: [" << globalTCA->primaryRSO << " (" << globalTCA->primaryID << ")] and ";
+	cout << "[" << globalTCA->secondaryRSO << " (" << globalTCA->secondaryID << ")]";
+	cout << " with min. distance " << globalTCA->minDistance << " at " << make_time_string(diffInSec) << endl;
+
+	OrbitalBall* primary = m_manager.find_RSO_from_ID(globalTCA->primaryID);
+	OrbitalBall* secondary = m_manager.find_RSO_from_ID(globalTCA->secondaryID);
+	rg_Point3D primaryAtGlobalTCA = primary->calculate_point_on_Kepler_orbit_at_time(diffInSec);
+	rg_Point3D secondaryAtGlobalTCA = secondary->calculate_point_on_Kepler_orbit_at_time(diffInSec);
+
+	pView->set_eye_direction((primaryAtGlobalTCA + secondaryAtGlobalTCA) / 2);
+	m_time = diffInSec - 300;
+	update_RSO_coord(m_time);
+	update_time_string(m_time);
+
 	pView->update();
 }
 

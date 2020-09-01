@@ -48,7 +48,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(VSRCDIR)\V\Core_tier\include;$(VSRCDIR)\V\VUFS\include;..\..\VDRCQtLib\VDRCQtLib\include;..\..\cppOrbitTools\orbitTools\core;..\..\cppOrbitTools\orbitTools\orbit;$(Qt_INCLUDEPATH_);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtOpenGL;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dev_vdrc\src\V\Core_tier\include;..\..\dev_vdrc\src\V\VUFS\include;..\..\VDRCQtLib\VDRCQtLib\include;..\..\cppOrbitTools\orbitTools\core;..\..\cppOrbitTools\orbitTools\orbit;$(Qt_INCLUDEPATH_);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtOpenGL;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -58,7 +58,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(VSRCDIR)\V\Core_tier\include;$(VSRCDIR)\V\VUFS\include;..\..\VDRCQtLib\VDRCQtLib\include;..\..\cppOrbitTools\orbitTools\core;..\..\cppOrbitTools\orbitTools\orbit;$(Qt_INCLUDEPATH_);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtOpenGL;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dev_vdrc\src\V\Core_tier\include;..\..\dev_vdrc\src\V\VUFS\include;..\..\VDRCQtLib\VDRCQtLib\include;..\..\cppOrbitTools\orbitTools\core;..\..\cppOrbitTools\orbitTools\orbit;$(Qt_INCLUDEPATH_);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtOpenGL;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -98,7 +98,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

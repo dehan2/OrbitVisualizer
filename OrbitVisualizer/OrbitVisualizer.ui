@@ -78,6 +78,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton_moveToGlobalTCA">
+          <property name="text">
+           <string>Move to Global TCA</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QLineEdit" name="lineEdit_timeString">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
@@ -103,6 +110,9 @@
             </property>
             <property name="minimum">
              <double>0.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>1.000000000000000</double>
             </property>
             <property name="value">
              <double>1.000000000000000</double>
@@ -155,7 +165,7 @@
      <x>0</x>
      <y>0</y>
      <width>1113</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -191,8 +201,8 @@
    <slot>open_prediction_command_file()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1049</x>
-     <y>103</y>
+     <x>1090</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
      <x>1104</x>
@@ -207,8 +217,8 @@
    <slot>visualization_option_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1085</x>
-     <y>283</y>
+     <x>1089</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
      <x>1112</x>
@@ -239,12 +249,28 @@
    <slot>play_simulation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1011</x>
-     <y>161</y>
+     <x>993</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
      <x>1111</x>
      <y>143</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_moveToGlobalTCA</sender>
+   <signal>clicked()</signal>
+   <receiver>OrbitVisualizerClass</receiver>
+   <slot>move_to_global_TCA()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1052</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1113</x>
+     <y>304</y>
     </hint>
    </hints>
   </connection>
@@ -254,5 +280,6 @@
   <slot>visualization_option_changed()</slot>
   <slot>simulation_option_changed()</slot>
   <slot>play_simulation()</slot>
+  <slot>move_to_global_TCA()</slot>
  </slots>
 </ui>

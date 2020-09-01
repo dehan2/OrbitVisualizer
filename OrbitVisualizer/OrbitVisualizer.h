@@ -54,4 +54,6 @@ public slots:
 
     void simulation_option_changed();
     void visualization_option_changed();
+
+    void move_to_global_TCA();
 };
